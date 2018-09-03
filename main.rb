@@ -19,7 +19,6 @@ get '/search/:artist' do
 
   albums = []
 
-
   resp.css(".review").each do |rev|
     # Filter out the crap
     found_artist = rev.css(".review__title-artist").first.text
@@ -34,8 +33,6 @@ get '/search/:artist' do
     review_html = Nokogiri::HTML HTTParty.get("https://pitchfork.com#{album_url}")
     review_score = review_html.css(".score").first.text.to_f
     albums << {name: album_name, score: review_score, url: "https://pitchfork.com#{album_url}"}
-
-    # puts "#{album_url} - #{review_score}"
   end
 
   if albums.size > 0
@@ -48,7 +45,6 @@ get '/search/:artist' do
     html += "**PITCHFORK APPROVED**" if avg >= 7.5
     html += "<br>-------------------------------<br>"
     html += "Newest: <a target='_blank' href='#{albums.first[:url]}'>#{albums.first[:name]}</a> - #{albums.first[:score]}<br><br>"
-    # html += "Newest: #{albums.first[:name]} - #{albums.first[:score]} (#{albums.first[:url]})<br><br>"
     html += "All albums:<br>"
     albums.sort_by{|r| r[:score]}.reverse.each{|a| html +=  "<a target='_blank' href='#{a[:url]}'>#{a[:name]}</a> - #{a[:score]}<br>"}
 
