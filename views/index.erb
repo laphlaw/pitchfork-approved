@@ -11,6 +11,11 @@
 
 
 <script type="text/javascript">
+    $("#artist").keyup(function(event) {
+        if (event.keyCode === 13) {
+            $("#btn-search").click();
+        }
+    });
 
     $("#btn-search").click(function () {
         $( "#result" ).html( "<i>Searching...</i>" );
