@@ -1,0 +1,20 @@
+<h4>Pitchfork Approved?</h4>
+<input type="text" class="input form-control" id="artist" placeholder="Artist">
+<button id="btn-search">Search</button>
+<br><br>
+
+<div id="result"></div>
+
+<script type='text/javascript' src='http://code.jquery.com/jquery-1.11.1.min.js'></script>
+
+<script type="text/javascript">
+
+    $("#btn-search").click(function () {
+        $( "#result" ).html( "<i>Searching...</i>" );
+
+        var artist = $("#artist").val();
+        $.get( "/search/" + artist, function( data ) {
+            $( "#result" ).html( data );
+        });
+    });
+</script>
