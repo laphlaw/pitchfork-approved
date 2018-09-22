@@ -2,6 +2,7 @@ require 'httparty'
 require 'nokogiri'
 require 'uri'
 require 'sinatra'
+require 'pp'
 
 # todo handling multiple albums per review page
 # todo print top track(s) from each album, and overall top 5 tracks
@@ -14,6 +15,9 @@ end
 
 get '/search/:artist' do
   artist = params[:artist].chomp(" ")
+  artist.gsub!("’", "'")
+  artist.split(",").first
+  artist.chomp!(" ")
   r = HTTParty.get ("https://pitchfork.com/search/more/?query=#{URI::encode artist}&filter=albumreviews")
   resp = Nokogiri::HTML r
 
@@ -22,6 +26,7 @@ get '/search/:artist' do
   resp.css(".review").each do |rev|
     # Filter out the crap
     found_artist = rev.css(".review__title-artist").first.text
+    found_artist.gsub!("’", "'")
     next unless found_artist.downcase == artist.downcase
     album_url = rev.css(".review__link").first['href']
     album_name = rev.css(".review__title-album").first.text
