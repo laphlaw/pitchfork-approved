@@ -13,7 +13,7 @@ get '/' do
 end
 
 get '/search/:artist' do
-  artist = params[:artist]
+  artist = params[:artist].chomp(" ")
   r = HTTParty.get ("https://pitchfork.com/search/more/?query=#{URI::encode artist}&filter=albumreviews")
   resp = Nokogiri::HTML r
 
