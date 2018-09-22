@@ -56,7 +56,7 @@ get '/search/:artist' do
 
     html
   else
-    "No results"
+    "No results for #{artist}"
   end
 end
 
