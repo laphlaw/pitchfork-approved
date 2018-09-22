@@ -15,8 +15,9 @@ end
 
 get '/search/:artist' do
   artist = params[:artist].chomp(" ")
+  artist = artist.split(",").first
   artist.gsub!("’", "'")
-  artist.split(",").first
+
   artist.chomp!(" ")
   r = HTTParty.get ("https://pitchfork.com/search/more/?query=#{URI::encode artist}&filter=albumreviews")
   resp = Nokogiri::HTML r
